@@ -1,0 +1,42 @@
+# Dependencies
+node_modules
+/.pnp
+.pnp.js
+yarn.lock
+package-lock.json
+
+# Testing
+/coverage
+
+# Production
+/dist
+/build
+.next
+out
+
+# Misc
+.DS_Store
+*.pem
+.env
+.env.local
+.env.*.local
+*.log
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Turbo
+.turbo
+
+# Prisma
+prisma/migrations
