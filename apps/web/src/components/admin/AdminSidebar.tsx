@@ -13,7 +13,15 @@ import {
   LogOut,
   ChevronRight,
 } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "./Sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "./Sheet";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
 
 interface NavItem {
   title: string;
@@ -71,32 +79,33 @@ export default function AdminSidebar({
 
   const handleLogout = () => {
     logout();
-    router.push("/");
+    toast.success("Logged out successfully");
+    router.push("/login");
   };
 
   const SidebarContent = ({ collapsed }: { collapsed: boolean }) => (
     <div
       className={cn(
-        "h-full border border-[#e2e8f0] dark:border-[#2e333d] rounded-xl overflow-hidden flex flex-col bg-white dark:bg-[#191B1F] transition-all duration-300 shadow-sm",
+        "h-full border border-default rounded-md overflow-hidden flex flex-col bg-white dark:bg-[#191B1F] transition-width duration-300",
         collapsed ? "w-[72px]" : "w-[248px]"
       )}
     >
       {/* Logo */}
-      <div className="p-4 border-b border-[#f1f5f9] dark:border-[#2e333d] h-[70px] flex items-center">
+      <div className="p-3 border-b border-default h-[70px] flex items-center">
         <Link href="/" className="flex items-center gap-3">
           <div className="size-10 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xl">
             🎲
           </div>
           {!collapsed && (
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent whitespace-nowrap">
+            <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent whitespace-nowrap">
               Dycemio
             </span>
           )}
         </Link>
       </div>
 
-      {/* Navigation */}
-      <nav className={cn("flex-1 overflow-y-auto my-3", collapsed ? "px-3" : "px-4")}>
+      {/* Nav */}
+      <nav className={cn("h-full flex-1 overflow-y-auto p-3")}>
         <div className="space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -110,19 +119,16 @@ export default function AdminSidebar({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 text-sm font-medium px-2.5 py-3 rounded-[10px] transition-all duration-200 group",
-                  isActive
-                    ? "bg-blue-600/10 text-blue-600 dark:bg-blue-600/20 dark:text-blue-400 shadow-sm shadow-blue-600/5"
-                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200"
+                  "flex items-center gap-3 text-sm font-medium capitalize px-2.5 py-3 rounded-[10px] text-[#334155] dark:text-[#cbd5e1] hover:bg-primary/20 hover:text-primary dark:hover:text-[#55FF82] transition-colors",
+                  isActive && "bg-primary/20 text-primary dark:text-[#55FF82]"
                 )}
               >
                 <span className={cn(collapsed && "w-full flex justify-center")}>
-                  <Icon className={cn("size-5 transition-transform duration-200", isActive && "scale-110")} />
+                  <Icon className="size-5" />
                 </span>
                 {!collapsed && (
-                  <div className="grow whitespace-nowrap font-medium">{item.title}</div>
+                  <div className="grow whitespace-nowrap">{item.title}</div>
                 )}
-                {!collapsed && isActive && <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />}
               </Link>
             );
           })}
@@ -130,17 +136,15 @@ export default function AdminSidebar({
       </nav>
 
       {/* Footer / Logout */}
-      <div className="border-t border-[#f1f5f9] dark:border-[#2e333d] p-4">
-        <button
+      <div className="border-t p-3">
+        <Button
+          variant="ghost"
+          className="w-full justify-start hover:bg-transparent cursor-pointer"
           onClick={handleLogout}
-          className={cn(
-            "flex items-center gap-3 w-full text-sm font-medium px-2.5 py-3 rounded-[10px] text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 transition-all duration-200",
-            collapsed && "justify-center"
-          )}
         >
-          <LogOut className="size-5" />
+          <LogOut className="size-4" />
           {!collapsed && <span>Logout</span>}
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -149,7 +153,7 @@ export default function AdminSidebar({
     <>
       {/* Desktop Sidebar */}
       <aside
-        className="xl:block hidden fixed top-0 bottom-0 py-6 pl-6 z-40 transition-all duration-300"
+        className="xl:block hidden fixed top-0 bottom-0 sm:py-6 py-3 sm:pl-6 pl-3"
         onMouseEnter={() => {
           if (isSidebarCollapsed && !onHoverSidebarCollapsed) {
             setIsSidebarCollapsed(false);
@@ -168,10 +172,15 @@ export default function AdminSidebar({
 
       {/* Mobile Sidebar (Sheet) */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent side="left" className="p-0 border-none bg-transparent shadow-none">
+        <SheetContent
+          side="left"
+          className="border-default flex flex-col gap-0 bg-white dark:bg-[#191B1F] z-50!"
+        >
           <SheetHeader className="hidden">
             <SheetTitle>Admin Menu</SheetTitle>
-            <SheetDescription>Navigate through the admin platform</SheetDescription>
+            <SheetDescription>
+              Navigate through the admin platform
+            </SheetDescription>
           </SheetHeader>
           <div className="h-full py-3 pl-3 pr-0">
             <SidebarContent collapsed={false} />
