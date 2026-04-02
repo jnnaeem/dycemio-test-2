@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Search, ExternalLink, Moon, Sun, Maximize } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import ProfileDropdown from "./ProfileDropdown";
 import NotificationDropdown from "./NotificationDropdown";
 
@@ -19,6 +21,13 @@ export default function AdminHeader({
   isSheetOpen,
   setIsSheetOpen,
 }: HeaderProps) {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <header className="sm:pt-6 pt-3 sm:px-6 px-3 w-full sticky top-0 z-40">
       <div className="bg-white/80 dark:bg-[#191B1F]/80 backdrop-blur-md w-full sm:px-6 px-4 rounded-xl border border-[#e2e8f0] dark:border-[#2e333d] shadow-sm transition-all duration-300">
@@ -82,8 +91,13 @@ export default function AdminHeader({
               <button className="hidden sm:flex items-center justify-center size-9 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 text-slate-500 dark:text-slate-400 transition-all">
                 <Maximize className="size-4.5" />
               </button>
-              <button className="flex items-center justify-center size-9 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 text-slate-500 dark:text-slate-400 transition-all">
-                <Sun className="size-4.5" />
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="flex items-center justify-center size-9 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 text-slate-500 dark:text-slate-400 transition-all"
+                aria-label="Toggle Theme"
+              >
+                {mounted && (theme === "dark" ? <Sun className="size-4.5" /> : <Moon className="size-4.5" />)}
+                {!mounted && <Sun className="size-4.5" />}
               </button>
               <NotificationDropdown />
             </div>
