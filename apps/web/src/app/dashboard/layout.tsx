@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { cn } from "@/lib/utils";
+import { AdminFooter } from "@/components/admin/Footer";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user, token } = useAuthStore();
-  console.log(user);
+  const { user, token, restoreFromStorage } = useAuthStore();
   const isAuthenticated = !!token;
   const router = useRouter();
   
@@ -21,14 +21,20 @@ export default function DashboardLayout({
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [onHoverSidebarCollapsed, setOnHoverSidebarCollapsed] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated || user?.role !== "ADMIN") {
+    restoreFromStorage();
+    setIsHydrated(true);
+  }, [restoreFromStorage]);
+
+  useEffect(() => {
+    if (isHydrated && (!isAuthenticated || user?.role !== "ADMIN")) {
       router.push("/auth/login");
     }
-  }, [isAuthenticated, user, router]);
+  }, [isHydrated, isAuthenticated, user, router]);
 
-  if (!isAuthenticated || user?.role !== "ADMIN") {
+  if (!isHydrated || !isAuthenticated || user?.role !== "ADMIN") {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-[#0f1115]">
         <div className="flex flex-col items-center gap-4">
@@ -40,7 +46,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-[#0f1115] transition-colors duration-300">
+    <div className="flex">
       {/* Sidebar Component */}
       <AdminSidebar
         isSidebarCollapsed={isSidebarCollapsed}
@@ -52,28 +58,18 @@ export default function DashboardLayout({
       />
 
       {/* Main Content Area */}
-      <div
-        className={cn(
-          "flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out",
-          isSidebarCollapsed ? "xl:pl-[96px]" : "xl:pl-[296px]"
-        )}
-      >
-        <AdminHeader
-          isSidebarCollapsed={isSidebarCollapsed}
-          setIsSidebarCollapsed={setIsSidebarCollapsed}
-          isSheetOpen={isSheetOpen}
-          setIsSheetOpen={setIsSheetOpen}
-        />
+      <div className={`${isSidebarCollapsed ? 'xl:pl-24' : 'xl:pl-[272px]'} w-full transition-all duration-300`}>
+        <div className="flex flex-col justify-between w-full min-h-svh">
+          <AdminHeader
+            isSidebarCollapsed={isSidebarCollapsed}
+            setIsSidebarCollapsed={setIsSidebarCollapsed}
+            isSheetOpen={isSheetOpen}
+            setIsSheetOpen={setIsSheetOpen}
+          />
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="max-w-7xl mx-auto w-full h-full">
-            {children}
-          </div>
-        </main>
-
-        <footer className="py-6 px-6 border-t border-[#e2e8f0] dark:border-[#2e333d] text-center text-sm text-slate-500 dark:text-slate-400">
-          <p>© {new Date().getFullYear()} Dycemio Admin. All rights reserved.</p>
-        </footer>
+          <main className="flex-1 mt-6 overflow-y-auto sm:px-6 px-3">{children}</main>
+          <AdminFooter />
+        </div>
       </div>
     </div>
   );
