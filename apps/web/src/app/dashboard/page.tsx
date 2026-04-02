@@ -21,8 +21,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { StatusBadge } from "@/components/dashboard/shared/StatusBadge";
-import { ShoppingCart, ArrowRight, TrendingUp, Globe, Users, Wallet,} from "lucide-react";
+import { ShoppingCart, ArrowRight, TrendingUp, Globe, Users, Wallet, RotateCw,} from "lucide-react";
 import { StatsCard } from "@/components/admin/StatsCard";
+import { LoadingSpinner } from "@/components/admin/LoadingSpinner";
 
 type Stats = {
   totalProducts: number;
@@ -37,10 +38,10 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
+    RefetchData();
   }, []);
 
-  const loadData = async () => {
+  const RefetchData = async () => {
     try {
       const [statsData, ordersData] = await Promise.all([
         adminUserAPI.getStats(),
@@ -55,33 +56,29 @@ export default function DashboardPage() {
     }
   };
 
-
-
   if (loading) {
-    return (
-      <div className="admin-page-loading">
-        <div className="admin-loading-spinner" />
-        <p>Loading dashboard...</p>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
-    <div className="dashboard-page">
-      {/* Page Header */}
-      <div className="page-header">
-        <div>
-          <h1 className="page-title">Dashboard</h1>
-          <p className="page-subtitle">Overview of your store performance</p>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <div className="space-y-1">
+          <h2 className="text-accent font-bold md:text-2xl text-xl">Dashboard</h2>
+          <p className="text-accent-foreground md:text-base text-sm">
+            Overview of your business performance
+          </p>
         </div>
-        <button onClick={loadData} className="btn btn-outline btn-icon" title="Refresh">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-            <path d="M3 3v5h5" />
-            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-            <path d="M16 16h5v5" />
-          </svg>
-        </button>
+
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => RefetchData()}
+          className="bg-white dark:bg-[#27292D] size-11 hover:bg-card active:scale-95 transition-all cursor-pointer shrink-0"
+          title="Refresh"
+        >
+          <RotateCw className="h-4 w-4" />
+        </Button>
       </div>
 
       {/* Stats Cards */}
@@ -119,15 +116,15 @@ export default function DashboardPage() {
 
       {/* Recent Orders Table */}
       <Card className="border card-border shadow-lg shadow-[#2E2D740D] rounded-[10px] overflow-hidden bg-card mt-8">
-        <CardHeader className="flex flex-row items-center justify-between bg-[#FAFAFB] dark:bg-[#191B1F] sm:px-6 px-4 py-4 border-b border-default">
+        <CardHeader className="flex flex-row flex-wrap gap-2 items-center justify-between bg-[#FAFAFB] dark:bg-[#191B1F] sm:px-6 px-4 py-4 border-b border-default">
           <div className="space-y-1">
             <CardTitle className="text-xl font-bold">Recent Orders</CardTitle>
             <CardDescription className="text-sm">Latest 10 orders placed</CardDescription>
           </div>
-          <Button asChild variant="outline" size="sm" className="hidden sm:flex h-9 shadow-sm hover:bg-slate-50">
+          <Button asChild variant="outline" size="sm" className="flex h-9 shadow-sm hover:bg-slate-50">
             <Link href="/dashboard/orders">
               View All
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </CardHeader>
@@ -171,15 +168,6 @@ export default function DashboardPage() {
           )}
         </CardContent>
       </Card>
-      
-      {/* Mobile view all link */}
-      <div className="sm:hidden mt-4 text-center">
-        <Button asChild variant="outline" className="w-full">
-          <Link href="/dashboard/orders">
-            View All Orders
-          </Link>
-        </Button>
-      </div>
     </div>
   );
 }
