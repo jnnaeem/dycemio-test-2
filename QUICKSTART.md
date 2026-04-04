@@ -1,6 +1,6 @@
-# Quick Start Guide - Dycemio
+# Quick Start Guide - Diceymio
 
-Get Dycemio up and running in 5 minutes!
+Get Diceymio up and running in 5 minutes!
 
 ## 🎯 Prerequisites
 
@@ -11,25 +11,29 @@ Get Dycemio up and running in 5 minutes!
 ## ⚡ 5-Minute Setup
 
 ### Step 1: Clone & Navigate
+
 ```bash
-cd dycemio
+cd diceymio
 ```
 
 ### Step 2: Install Dependencies
+
 ```bash
 yarn install
 ```
 
 ### Step 3: Configure Environment
+
 ```bash
 # Create .env file for API
 cp apps/api/.env.example apps/api/.env
 
 # Edit DATABASE_URL in apps/api/.env
-# Example: DATABASE_URL="postgresql://user:password@localhost:5432/dycemio"
+# Example: DATABASE_URL="postgresql://user:password@localhost:5432/diceymio"
 ```
 
 ### Step 4: Setup Database
+
 ```bash
 # Run migrations
 yarn prisma:migrate
@@ -39,6 +43,7 @@ yarn prisma:seed
 ```
 
 ### Step 5: Start Development
+
 ```bash
 yarn dev
 ```
@@ -54,12 +59,14 @@ That's it! 🎉
 ## 🔐 Test Credentials
 
 ### Admin Account (for testing admin features)
+
 ```
-Email: admin@dycemio.com
+Email: admin@diceymio.com
 Password: Admin@123456
 ```
 
 ### Sample Products in Database
+
 ```
 1. Catan - $45.99 (5 in stock)
 2. Ticket to Ride - $55.99 (8 in stock)
@@ -68,22 +75,27 @@ Password: Admin@123456
 ## 🧪 Test the Platform
 
 ### 1. Signup
+
 - Go to http://localhost:3001/auth/signup
 - Create a new customer account
 
 ### 2. Browse Products
+
 - Visit http://localhost:3001/products
 - See the 2 sample board games
 
 ### 3. Add to Cart
+
 - Click "Add to Cart" on a product
 - Navigate to http://localhost:3001/cart
 
 ### 4. View Orders (empty initially)
+
 - Go to http://localhost:3001/orders
 - No orders yet (checkout flow needs payment setup)
 
 ### 5. Test Admin (optional)
+
 - Log in with admin credentials
 - Visit http://localhost:3001/admin
 - See admin dashboard
@@ -119,6 +131,7 @@ cd apps/web && yarn dev
 ## 🐛 Troubleshooting
 
 ### Port Already in Use
+
 ```bash
 # Kill process on port 3000
 lsof -ti:3000 | xargs kill -9
@@ -128,6 +141,7 @@ lsof -ti:3001 | xargs kill -9
 ```
 
 ### Database Connection Error
+
 ```
 Error: Can't reach database server
 
@@ -138,13 +152,14 @@ Solutions:
    - Windows: Start PostgreSQL from Services
 
 2. Check DATABASE_URL in apps/api/.env
-   - Default: postgresql://user:password@localhost:5432/dycemio
+   - Default: postgresql://user:password@localhost:5432/diceymio
 
 3. Create database if not exists:
-   createdb dycemio
+   createdb diceymio
 ```
 
 ### Module Not Found
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules
@@ -156,6 +171,7 @@ yarn prisma:generate
 ```
 
 ### Yarn Not Working
+
 ```bash
 # Use npm instead
 npm install
@@ -173,16 +189,19 @@ npm run dev
 ## 🚀 Next Steps
 
 ### To Add Products
-1. Log in as admin (admin@dycemio.com / Admin@123456)
+
+1. Log in as admin (admin@diceymio.com / Admin@123456)
 2. Go to http://localhost:3001/admin
 3. Use the API endpoint: `POST /api/admin/products`
 
 ### To Implement Payment
+
 - Add Stripe keys to apps/api/.env
 - Implement payment processing in Order → Payment flow
 - See [TODO.md](./TODO.md) for details
 
 ### To Deploy
+
 - Build: `yarn build`
 - API: Deploy `apps/api` to Vercel, Heroku, or Docker
 - Web: Deploy `apps/web` to Vercel or Netlify
@@ -191,6 +210,7 @@ npm run dev
 ## 🆘 Get Help
 
 Check these files for answers:
+
 1. **Setup Issues**: [SETUP_GUIDE.md](./SETUP_GUIDE.md)
 2. **API Issues**: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
 3. **Feature Questions**: [TODO.md](./TODO.md)
@@ -207,7 +227,7 @@ Check these files for answers:
 ✅ TypeScript throughout  
 ✅ Database with Prisma  
 ✅ API with Express  
-✅ Frontend with Next.js  
+✅ Frontend with Next.js
 
 ## 📊 Project Stats
 
@@ -221,13 +241,14 @@ Check these files for answers:
 ## 🎯 Success Checklist
 
 After setup, verify:
+
 - [ ] `yarn dev` runs without errors
 - [ ] Frontend loads at http://localhost:3001
 - [ ] API responds at http://localhost:3000/api/health
 - [ ] Can create account at /auth/signup
 - [ ] Can login at /auth/login
 - [ ] Can view products at /products
-- [ ] Admin account works (admin@dycemio.com)
+- [ ] Admin account works (admin@diceymio.com)
 
 If all checkmarks pass, you're ready to go! 🚀
 

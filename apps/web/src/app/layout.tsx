@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Dycemio - Board Game Store",
+  title: "Diceymio - Board Game Store",
   description: "Buy your favorite board games online",
 };
 

@@ -1,9 +1,9 @@
-# Dycemio Project Structure
+# Diceymio Project Structure
 
-Complete directory tree of the Dycemio ecommerce platform:
+Complete directory tree of the Diceymio ecommerce platform:
 
 ```
-dycemio/
+diceymio/
 │
 ├── apps/
 │   ├── api/                                    # Express.js Backend
@@ -118,7 +118,9 @@ dycemio/
 ## Module Architecture Details
 
 ### Auth Module
+
 Handles user authentication and authorization
+
 ```
 auth/
 ├── signup         → Validates input → Creates user → Returns JWT
@@ -127,7 +129,9 @@ auth/
 ```
 
 ### Product Module
+
 Manages board game catalog
+
 ```
 product/
 ├── List           → Returns all active products
@@ -139,7 +143,9 @@ product/
 ```
 
 ### Cart Module
+
 Shopping cart management
+
 ```
 cart/
 ├── Get            → Fetch user's cart with items
@@ -150,7 +156,9 @@ cart/
 ```
 
 ### Order Module
+
 Order processing and tracking
+
 ```
 order/
 ├── Create         → Convert cart to order (validates address)
@@ -232,17 +240,17 @@ PUT    /api/orders/:id/status   ✓ Update status (admin)
 
 ## Key Files Summary
 
-| File | Purpose | Language |
-|------|---------|----------|
-| app.ts | Express app setup | TypeScript |
-| schema.prisma | Database definitions | Prisma |
-| seed.ts | Sample data | TypeScript |
-| auth.middleware | JWT verification | TypeScript |
-| page.tsx | Next.js pages | TypeScript + JSX |
-| authStore.ts | Auth state | TypeScript |
-| cartStore.ts | Cart state | TypeScript |
-| api.ts | HTTP client | TypeScript |
-| services.ts | API calls | TypeScript |
+| File            | Purpose              | Language         |
+| --------------- | -------------------- | ---------------- |
+| app.ts          | Express app setup    | TypeScript       |
+| schema.prisma   | Database definitions | Prisma           |
+| seed.ts         | Sample data          | TypeScript       |
+| auth.middleware | JWT verification     | TypeScript       |
+| page.tsx        | Next.js pages        | TypeScript + JSX |
+| authStore.ts    | Auth state           | TypeScript       |
+| cartStore.ts    | Cart state           | TypeScript       |
+| api.ts          | HTTP client          | TypeScript       |
+| services.ts     | API calls            | TypeScript       |
 
 ---
 
@@ -272,6 +280,7 @@ Web Level:
 ## Environment Variables
 
 ### API (.env)
+
 ```
 NODE_ENV
 PORT
@@ -286,6 +295,7 @@ AWS_S3_BUCKET (optional)
 ```
 
 ### Web (.env)
+
 ```
 NEXT_PUBLIC_API_URL
 ```

@@ -98,7 +98,7 @@ export default function AdminSidebar({
           </div>
           {!collapsed && (
             <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent whitespace-nowrap">
-              Dycemio
+              Diceymio
             </span>
           )}
         </Link>

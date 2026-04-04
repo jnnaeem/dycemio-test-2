@@ -1,6 +1,7 @@
-# Dycemio API Documentation
+# Diceymio API Documentation
 
 ## Base URL
+
 ```
 http://localhost:3000/api
 ```
@@ -40,9 +41,11 @@ Error responses:
 ## Authentication Endpoints
 
 ### Signup
+
 Create a new user account.
 
 **Request**
+
 ```
 POST /auth/signup
 Content-Type: application/json
@@ -56,6 +59,7 @@ Content-Type: application/json
 ```
 
 **Response (201)**
+
 ```json
 {
   "success": true,
@@ -74,6 +78,7 @@ Content-Type: application/json
 ```
 
 **Validation Rules**
+
 - Email: Valid email format, unique in database
 - Password: Minimum 8 characters, 1 uppercase, 1 number
 - firstName, lastName: Minimum 2 characters
@@ -81,9 +86,11 @@ Content-Type: application/json
 ---
 
 ### Login
+
 Authenticate an existing user.
 
 **Request**
+
 ```
 POST /auth/login
 Content-Type: application/json
@@ -95,6 +102,7 @@ Content-Type: application/json
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -113,6 +121,7 @@ Content-Type: application/json
 ```
 
 **Error (401)**
+
 ```json
 {
   "success": false,
@@ -125,14 +134,17 @@ Content-Type: application/json
 ## Product Endpoints
 
 ### List Products
+
 Get all active products.
 
 **Request**
+
 ```
 GET /products
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -156,14 +168,17 @@ GET /products
 ---
 
 ### Get Product Details
+
 Get specific product information.
 
 **Request**
+
 ```
 GET /products/:id
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -182,6 +197,7 @@ GET /products/:id
 ```
 
 **Error (404)**
+
 ```json
 {
   "success": false,
@@ -194,15 +210,18 @@ GET /products/:id
 ## Shopping Cart Endpoints
 
 ### Get Cart
+
 Retrieve the user's shopping cart.
 
 **Request**
+
 ```
 GET /cart
 Authorization: Bearer <token>
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -234,9 +253,11 @@ Authorization: Bearer <token>
 ---
 
 ### Add Item to Cart
+
 Add a product to the user's cart.
 
 **Request**
+
 ```
 POST /cart/items
 Authorization: Bearer <token>
@@ -249,6 +270,7 @@ Content-Type: application/json
 ```
 
 **Response (201)**
+
 ```json
 {
   "success": true,
@@ -266,15 +288,18 @@ Content-Type: application/json
 ```
 
 **Errors**
+
 - `404`: Product not found
 - `400`: Insufficient stock
 
 ---
 
 ### Update Cart Item
+
 Update quantity of a cart item.
 
 **Request**
+
 ```
 PUT /cart/items/:id
 Authorization: Bearer <token>
@@ -286,6 +311,7 @@ Content-Type: application/json
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -301,15 +327,18 @@ Content-Type: application/json
 ---
 
 ### Remove Item from Cart
+
 Delete an item from the cart.
 
 **Request**
+
 ```
 DELETE /cart/items/:id
 Authorization: Bearer <token>
 ```
 
 **Response (204)**
+
 ```
 No content
 ```
@@ -319,9 +348,11 @@ No content
 ## Order Endpoints
 
 ### Create Order
+
 Create a new order from the shopping cart.
 
 **Request**
+
 ```
 POST /orders
 Authorization: Bearer <token>
@@ -334,6 +365,7 @@ Content-Type: application/json
 ```
 
 **Response (201)**
+
 ```json
 {
   "success": true,
@@ -363,21 +395,25 @@ Content-Type: application/json
 ```
 
 **Errors**
+
 - `400`: Cart is empty
 - `404`: Shipping address not found
 
 ---
 
 ### Get User Orders
+
 Retrieve all orders for the logged-in user.
 
 **Request**
+
 ```
 GET /orders
 Authorization: Bearer <token>
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -398,15 +434,18 @@ Authorization: Bearer <token>
 ---
 
 ### Get Order Details
+
 Get details of a specific order.
 
 **Request**
+
 ```
 GET /orders/:id
 Authorization: Bearer <token>
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -430,9 +469,11 @@ Authorization: Bearer <token>
 ## Admin Endpoints
 
 ### Create Product
+
 Add a new product to the catalog (admin only).
 
 **Request**
+
 ```
 POST /admin/products
 Authorization: Bearer <admin_token>
@@ -448,6 +489,7 @@ Content-Type: application/json
 ```
 
 **Response (201)**
+
 ```json
 {
   "success": true,
@@ -466,9 +508,11 @@ Content-Type: application/json
 ---
 
 ### Update Product
+
 Modify an existing product (admin only).
 
 **Request**
+
 ```
 PUT /admin/products/:id
 Authorization: Bearer <admin_token>
@@ -481,6 +525,7 @@ Content-Type: application/json
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -492,15 +537,18 @@ Content-Type: application/json
 ---
 
 ### Delete Product
+
 Soft delete a product (marks as inactive).
 
 **Request**
+
 ```
 DELETE /admin/products/:id
 Authorization: Bearer <admin_token>
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -515,15 +563,18 @@ Authorization: Bearer <admin_token>
 ---
 
 ### Get All Orders (Admin)
+
 View all orders in the system.
 
 **Request**
+
 ```
 GET /orders/all
 Authorization: Bearer <admin_token>
 ```
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -549,9 +600,11 @@ Authorization: Bearer <admin_token>
 ---
 
 ### Update Order Status
+
 Change the status of an order (admin only).
 
 **Request**
+
 ```
 PUT /orders/:id/status
 Authorization: Bearer <admin_token>
@@ -563,6 +616,7 @@ Content-Type: application/json
 ```
 
 **Valid Status Values**
+
 - `PENDING`
 - `PROCESSING`
 - `SHIPPED`
@@ -571,6 +625,7 @@ Content-Type: application/json
 - `REFUNDED`
 
 **Response (200)**
+
 ```json
 {
   "success": true,
@@ -587,20 +642,21 @@ Content-Type: application/json
 
 ## Error Codes
 
-| Code | Meaning |
-|------|---------|
-| 400 | Bad Request - Invalid input |
-| 401 | Unauthorized - Missing or invalid token |
-| 403 | Forbidden - Insufficient permissions |
-| 404 | Not Found - Resource doesn't exist |
-| 409 | Conflict - Resource already exists |
-| 500 | Internal Server Error |
+| Code | Meaning                                 |
+| ---- | --------------------------------------- |
+| 400  | Bad Request - Invalid input             |
+| 401  | Unauthorized - Missing or invalid token |
+| 403  | Forbidden - Insufficient permissions    |
+| 404  | Not Found - Resource doesn't exist      |
+| 409  | Conflict - Resource already exists      |
+| 500  | Internal Server Error                   |
 
 ---
 
 ## Rate Limiting
 
 Currently no rate limiting is applied. In production, implement:
+
 - 100 requests per minute per IP
 - 50 requests per minute per authenticated user
 
@@ -609,6 +665,7 @@ Currently no rate limiting is applied. In production, implement:
 ## CORS
 
 The API allows requests from:
+
 - `http://localhost:3001` (development)
 - Configure `CORS_ORIGIN` in production
 
@@ -617,14 +674,15 @@ The API allows requests from:
 ## Example Client Code
 
 ### Using Axios
+
 ```javascript
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: "http://localhost:3000/api",
 });
 
 // Add token to requests
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -632,20 +690,20 @@ api.interceptors.request.use((config) => {
 });
 
 // Signup
-const { data } = await api.post('/auth/signup', {
-  email: 'user@example.com',
-  password: 'SecurePass123',
-  firstName: 'John',
-  lastName: 'Doe'
+const { data } = await api.post("/auth/signup", {
+  email: "user@example.com",
+  password: "SecurePass123",
+  firstName: "John",
+  lastName: "Doe",
 });
 
 // Get products
-const { data: products } = await api.get('/products');
+const { data: products } = await api.get("/products");
 
 // Add to cart
-await api.post('/cart/items', {
-  productId: 'catan',
-  quantity: 1
+await api.post("/cart/items", {
+  productId: "catan",
+  quantity: 1,
 });
 ```
 
@@ -681,5 +739,6 @@ curl -X GET http://localhost:3000/api/products
 ---
 
 ## Version
+
 API Version: 1.0.0
 Last Updated: 2024

@@ -1,4 +1,4 @@
-# Dycemio Project - Implementation Checklist
+# Diceymio Project - Implementation Checklist
 
 ## ✅ Completed
 
@@ -204,7 +204,7 @@
 
 ```bash
 # 1. Setup project
-cd dycemio
+cd diceymio
 yarn install
 
 # 2. Configure environment
@@ -228,7 +228,7 @@ yarn dev
 
 ## Default Credentials (for development only)
 
-- **Admin Email**: admin@dycemio.com
+- **Admin Email**: admin@diceymio.com
 - **Admin Password**: Admin@123456
 
 ---
@@ -236,7 +236,7 @@ yarn dev
 ## File Structure Reminder
 
 ```
-dycemio/
+diceymio/
 ├── apps/api/          # Express backend
 ├── apps/web/          # Next.js frontend
 ├── packages/tsconfig/ # Shared config

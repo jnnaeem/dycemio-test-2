@@ -20,7 +20,7 @@ export default function Home() {
             <Link href="/" className="flex items-center gap-2 group">
               <span className="text-3xl filter transition-transform group-hover:rotate-12 duration-300">🎲</span>
               <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                Dycemio
+                Diceymio
               </span>
             </Link>
             
@@ -90,7 +90,7 @@ export default function Home() {
                 <div className="relative aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl glass p-2 border border-white/40">
                   <div className="absolute inset-x-0 bottom-0 p-8 z-20 bg-gradient-to-t from-slate-900/40 to-transparent">
                     <p className="text-white font-medium text-lg leading-snug">
-                      "Dycemio has the best selection of Eurogames I've seen. Fast shipping and great support!"
+                      "Diceymio has the best selection of Eurogames I've seen. Fast shipping and great support!"
                     </p>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export default function Home() {
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-8">
                 <span className="text-4xl">🎲</span>
-                <span className="text-2xl font-black text-white">Dycemio</span>
+                <span className="text-2xl font-black text-white">Diceymio</span>
               </div>
               <p className="text-slate-400 max-w-sm leading-relaxed">
                 The ultimate destination for board game lovers. Quality service, curated selection, and a community focus.
@@ -178,7 +178,7 @@ export default function Home() {
             </div>
           </div>
           <div className="pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-            <p>&copy; {new Date().getFullYear()} Dycemio. Designed for the tabletop elite.</p>
+            <p>&copy; {new Date().getFullYear()} Diceymio. Designed for the tabletop elite.</p>
           </div>
         </div>
       </footer>

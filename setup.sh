@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Dycemio Project Setup Script
+# Diceymio Project Setup Script
 # This script sets up the project with all necessary configurations
 
 set -e
 
-echo "🚀 Setting up Dycemio..."
+echo "🚀 Setting up Diceymio..."
 
 # Colors for output
 GREEN='\033[0;32m'

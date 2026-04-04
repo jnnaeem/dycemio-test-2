@@ -60,10 +60,11 @@ export default function CartPage() {
     );
   };
 
-  const total = cart?.items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  ) || 0;
+  const total =
+    cart?.items.reduce(
+      (sum, item) => sum + item.product.price * item.quantity,
+      0
+    ) || 0;
 
   if (loading) return <div className="text-center py-20">Loading...</div>;
 
@@ -74,7 +75,7 @@ export default function CartPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="text-2xl font-bold text-blue-600">
-              🎲 Dycemio
+              🎲 Diceymio
             </Link>
             <div className="flex gap-4">
               <Link

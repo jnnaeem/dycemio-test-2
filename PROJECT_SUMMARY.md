@@ -1,8 +1,8 @@
-# 🎲 Dycemio - Complete Project Summary
+# 🎲 Diceymio - Complete Project Summary
 
 ## Project Overview
 
-**Dycemio** is a lightweight, full-stack ecommerce platform for selling board games. It's built using the same architectural patterns from your dot_bd_reseller project but scaled down for a small store with just 1-2 products.
+**Diceymio** is a lightweight, full-stack ecommerce platform for selling board games. It's built using the same architectural patterns from your dot_bd_reseller project but scaled down for a small store with just 1-2 products.
 
 ### Key Characteristics
 - ✅ Small scale (1-2 products initially)
@@ -87,7 +87,7 @@ Products:
 2. Ticket to Ride ($55.99) - 8 in stock
 
 Admin User:
-- Email: admin@dycemio.com
+- Email: admin@diceymio.com
 - Password: Admin@123456
 ```
 
@@ -105,7 +105,7 @@ Admin User:
 
 ### 2. Setup
 ```bash
-cd dycemio
+cd diceymio
 yarn install
 cp apps/api/.env.example apps/api/.env
 cp apps/web/.env.example apps/web/.env
@@ -236,7 +236,7 @@ module/
 ## 📁 Project Layout
 
 ```
-dycemio/
+diceymio/
 ├── apps/
 │   ├── api/                    # Express backend
 │   │   ├── src/                # Source code
@@ -444,7 +444,7 @@ Refer to:
 
 ## 🎉 You're All Set!
 
-The Dycemio project is ready for:
+The Diceymio project is ready for:
 1. Local development
 2. Feature additions
 3. Payment integration

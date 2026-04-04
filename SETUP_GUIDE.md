@@ -1,10 +1,11 @@
-# Dycemio - Board Game Ecommerce Platform
+# Diceymio - Board Game Ecommerce Platform
 
 A lightweight ecommerce platform for selling board games with a modern tech stack: Express.js backend, Next.js frontend, and PostgreSQL database.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - **Node.js** 18+
 - **PostgreSQL** 12+
 - **Yarn** or **npm**
@@ -12,42 +13,49 @@ A lightweight ecommerce platform for selling board games with a modern tech stac
 ### Installation
 
 1. **Clone and navigate**
+
    ```bash
-   cd dycemio
+   cd diceymio
    ```
 
 2. **Install dependencies**
+
    ```bash
    yarn install
    ```
 
 3. **Setup API environment**
+
    ```bash
    cp apps/api/.env.example apps/api/.env
    ```
-   
+
    Edit `apps/api/.env` with your database credentials and JWT secret:
+
    ```
-   DATABASE_URL=postgresql://user:password@localhost:5432/dycemio
+   DATABASE_URL=postgresql://user:password@localhost:5432/diceymio
    JWT_SECRET=your-super-secret-key
    STRIPE_SECRET_KEY=sk_test_...
    ```
 
 4. **Setup Web environment**
+
    ```bash
    cp apps/web/.env.example apps/web/.env
    ```
 
 5. **Setup database**
+
    ```bash
    # Run migrations
    yarn prisma:migrate
-   
+
    # Seed sample data (includes 2 board games)
    yarn prisma:seed
    ```
 
 6. **Start development servers**
+
    ```bash
    yarn dev
    ```
@@ -59,7 +67,7 @@ A lightweight ecommerce platform for selling board games with a modern tech stac
 ## 📁 Project Structure
 
 ```
-dycemio/
+diceymio/
 ├── apps/
 │   ├── api/                    # Express.js backend
 │   │   ├── src/
@@ -101,56 +109,66 @@ dycemio/
 ### Core Models
 
 **User**
+
 - Email authentication
 - Role-based access (CUSTOMER, ADMIN)
 - Email verification support
 
 **Product**
+
 - Name, description, price, stock
 - Image support (S3 URLs)
 - Active/inactive status
 
 **Cart**
+
 - One cart per user
 - Cart items with product references
 - Quantity management
 
 **Order**
+
 - Order number, user reference
 - Status tracking (PENDING → DELIVERED)
 - Item list with pricing snapshot
 - Shipping address
 
 **Payment**
+
 - Stripe integration
 - Payment status tracking
 - Order linkage
 
 **Address**
+
 - User shipping addresses
 - Default address support
 
 ## 🔑 Key Features
 
 ### Authentication
+
 - Email/password signup & login
 - JWT-based authentication
 - Password hashing with bcrypt
 - Protected routes with auth middleware
 
 ### Products
+
 - List all products
 - Product details view
 - Admin: Create, update, delete products
 - Stock management
 
 ### Shopping Cart
+
 - Add/remove items
 - Update quantities
 - Cart persistence
 - Clear cart on checkout
 
 ### Orders
+
 - Create orders from cart
 - Order history view
 - Admin: View all orders
@@ -158,6 +176,7 @@ dycemio/
 - Order status tracking
 
 ### Admin Dashboard
+
 - View all orders
 - Update order status
 - Add new products
@@ -166,12 +185,14 @@ dycemio/
 ## 🛣️ API Endpoints
 
 ### Authentication
+
 ```
 POST   /api/auth/signup      # Register new user
 POST   /api/auth/login       # Login user
 ```
 
 ### Products
+
 ```
 GET    /api/products         # List all products
 GET    /api/products/:id     # Get product details
@@ -181,6 +202,7 @@ DELETE /api/admin/products/:id    # Delete product (admin)
 ```
 
 ### Cart
+
 ```
 GET    /api/cart             # Get user's cart
 POST   /api/cart/items       # Add item to cart
@@ -189,6 +211,7 @@ DELETE /api/cart/items/:id   # Remove from cart
 ```
 
 ### Orders
+
 ```
 POST   /api/orders           # Create order
 GET    /api/orders           # Get user's orders
@@ -202,7 +225,7 @@ PUT    /api/orders/:id/status    # Update order status (admin)
 The seed script creates:
 
 1. **Admin User**
-   - Email: `admin@dycemio.com`
+   - Email: `admin@diceymio.com`
    - Password: `Admin@123456`
 
 2. **Products**
@@ -221,6 +244,7 @@ The seed script creates:
 ## 📝 Environment Variables
 
 ### API (apps/api/.env)
+
 ```
 NODE_ENV=development
 PORT=3000
@@ -231,6 +255,7 @@ STRIPE_SECRET_KEY=sk_test_...
 ```
 
 ### Web (apps/web/.env)
+
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
@@ -238,6 +263,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - **Framework**: Express.js 5
 - **Language**: TypeScript
 - **Database**: PostgreSQL with Prisma ORM
@@ -247,6 +273,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api
 - **Server**: tsx for development, built with tsup
 
 ### Frontend
+
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
@@ -255,12 +282,14 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api
 - **SSR**: Enabled by default
 
 ### DevOps
+
 - **Monorepo**: Turborepo
 - **Package Manager**: Yarn workspaces
 
 ## 📦 Scripts
 
 ### Root (monorepo)
+
 ```bash
 yarn dev              # Start all services
 yarn build            # Build all apps
@@ -271,6 +300,7 @@ yarn prisma:studio    # Open Prisma Studio
 ```
 
 ### API
+
 ```bash
 cd apps/api
 yarn dev              # Start API server
@@ -279,6 +309,7 @@ yarn prisma:generate  # Generate Prisma client
 ```
 
 ### Web
+
 ```bash
 cd apps/web
 yarn dev              # Start Next.js dev server
@@ -302,6 +333,7 @@ yarn test:e2e
 ## 🚢 Deployment
 
 ### API
+
 ```bash
 # Build
 yarn build
@@ -311,11 +343,13 @@ node dist/app.js
 ```
 
 Ensure these environment variables are set in production:
+
 - `DATABASE_URL` - Production database
 - `JWT_SECRET` - Strong secret key
 - `NODE_ENV=production`
 
 ### Web
+
 ```bash
 # Build
 yarn build
@@ -327,6 +361,7 @@ yarn start
 ## 🐛 Common Issues
 
 ### Port Already in Use
+
 ```bash
 # Kill process on port
 lsof -ti:3000 | xargs kill -9
@@ -334,11 +369,13 @@ lsof -ti:3001 | xargs kill -9
 ```
 
 ### Database Connection
+
 - Ensure PostgreSQL is running
 - Verify DATABASE_URL in .env
 - Run migrations: `yarn prisma:migrate`
 
 ### Module Not Found
+
 - Clear node_modules: `rm -rf node_modules && yarn install`
 - Regenerate Prisma: `yarn prisma:generate`
 

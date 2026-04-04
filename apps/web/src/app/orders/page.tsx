@@ -46,7 +46,7 @@ export default function OrdersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="text-2xl font-bold text-blue-600">
-              🎲 Dycemio
+              🎲 Diceymio
             </Link>
             <div className="flex gap-4">
               <Link
@@ -55,10 +55,7 @@ export default function OrdersPage() {
               >
                 Shop
               </Link>
-              <Link
-                href="/cart"
-                className="text-gray-600 hover:text-gray-900"
-              >
+              <Link href="/cart" className="text-gray-600 hover:text-gray-900">
                 Cart
               </Link>
             </div>
@@ -72,7 +69,9 @@ export default function OrdersPage() {
 
         {orders.length === 0 ? (
           <div className="text-center">
-            <p className="text-gray-600 mb-4">You haven't placed any orders yet</p>
+            <p className="text-gray-600 mb-4">
+              You haven't placed any orders yet
+            </p>
             <Link
               href="/products"
               className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg"
@@ -111,25 +110,28 @@ export default function OrdersPage() {
                 <div className="border-t border-gray-200 pt-4">
                   <h4 className="font-semibold mb-2">Items:</h4>
                   <ul className="space-y-2">
-                      {order.items.map((item) => (
-                        <li key={item.id} className="flex gap-4 items-center border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-                          <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded border border-gray-200">
-                            <img
-                              src={getProductImageUrl(item.product.image)!}
-                              alt={item.product.name}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-900">
-                              {item.product.name} x {item.quantity}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              Price: ${(item.price * item.quantity).toFixed(2)}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
+                    {order.items.map((item) => (
+                      <li
+                        key={item.id}
+                        className="flex gap-4 items-center border-b border-gray-100 last:border-0 pb-4 last:pb-0"
+                      >
+                        <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded border border-gray-200">
+                          <img
+                            src={getProductImageUrl(item.product.image)!}
+                            alt={item.product.name}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-gray-900">
+                            {item.product.name} x {item.quantity}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            Price: ${(item.price * item.quantity).toFixed(2)}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
