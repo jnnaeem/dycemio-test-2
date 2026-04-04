@@ -10,16 +10,29 @@ import {
 import { useCartStore } from "@/store/cartStore";
 import { useCartSheetStore } from "@/store/cartSheetStore";
 import { getProductImageUrl } from "@/lib/utils";
-import { Minus, Plus, Trash2, X } from "lucide-react";
+import { Minus, Plus, Trash2, X, Ticket, BadgePercent } from "lucide-react";
 import { toast } from "sonner";
-import { cartAPI } from "@/lib/services";
+import { cartAPI, couponAPI } from "@/lib/services";
 import { useAuthStore } from "@/store/authStore";
 
 export default function CartSheet() {
   const { isOpen, onClose } = useCartSheetStore();
-  const { items, setItems, removeItem, updateQuantity, getTotal } = useCartStore();
+  const { 
+    items, 
+    setItems, 
+    removeItem, 
+    updateQuantity, 
+    getSubtotal, 
+    getDiscount, 
+    getTotal,
+    appliedCoupon,
+    setAppliedCoupon
+  } = useCartStore();
   const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const [showCouponInput, setShowCouponInput] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [validating, setValidating] = useState(false);
 
   // Sync with API when sheet opens
   useEffect(() => {
@@ -60,13 +73,39 @@ export default function CartSheet() {
     }
   };
 
+  const handleApplyCoupon = async () => {
+    if (!couponCode) return;
+    setValidating(true);
+    try {
+      const simplifiedItems = items.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.product.price
+      }));
+      const result = await couponAPI.validate(couponCode, simplifiedItems);
+      setAppliedCoupon(result);
+      toast.success(`Coupon "${result.code}" applied!`);
+      setShowCouponInput(false);
+      setCouponCode("");
+    } catch (err: any) {
+      toast.error(err.response?.data?.error || "Invalid coupon code");
+    } finally {
+      setValidating(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    toast.info("Coupon removed");
+  };
+
   const handlePlaceOrder = () => {
     toast.info("Checkout feature is coming soon!");
   };
 
-  const subtotal = getTotal();
-  const discount = 0; // Mock discount for now
-  const total = subtotal - discount;
+  const subtotal = getSubtotal();
+  const discount = getDiscount();
+  const total = getTotal();
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -164,16 +203,76 @@ export default function CartSheet() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="p-6 pt-4 border-t border-[#1A2E23] bg-[#0B1710]/80 backdrop-blur-md">
-            <button className="text-[10px] font-bold text-gray-300 hover:text-white transition-colors underline underline-offset-4 tracking-widest mb-6 block uppercase">
-              Apply Coupon
-            </button>
+            {/* Coupon Section */}
+            {!appliedCoupon ? (
+              <div className="mb-6">
+                {!showCouponInput ? (
+                  <button 
+                    onClick={() => setShowCouponInput(true)}
+                    className="text-[10px] font-bold text-gray-300 hover:text-white transition-colors underline underline-offset-4 tracking-widest uppercase flex items-center gap-2"
+                  >
+                    <Ticket className="size-3" /> Apply Coupon
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      placeholder="COUPON CODE" 
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      className="flex-1 bg-[#1A2E23] border border-[#2B4738] rounded-lg px-3 py-2 text-xs font-bold tracking-widest placeholder:text-gray-600 focus:outline-none focus:border-[#55FF82] transition-colors uppercase"
+                    />
+                    <button 
+                      onClick={handleApplyCoupon}
+                      disabled={validating || !couponCode}
+                      className="bg-[#55FF82] text-[#0A140F] px-4 py-2 rounded-lg text-[10px] font-black uppercase hover:bg-[#45EE72] transition-all disabled:opacity-50 disabled:grayscale"
+                    >
+                      {validating ? "..." : "APPLY"}
+                    </button>
+                    <button 
+                      onClick={() => setShowCouponInput(false)}
+                      className="text-gray-500 hover:text-white"
+                    >
+                      <X className="size-4" />
+                    </button>
+                  </div>
+                )
+              }
+              </div>
+            ) : (
+              <div className="flex items-center justify-between bg-[#1D4D32]/30 border border-[#1D4D32] rounded-lg p-3 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="size-8 rounded-full bg-[#1D4D32] flex items-center justify-center">
+                    <BadgePercent className="size-4 text-[#55FF82]" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-[#55FF82] tracking-widest uppercase">Coupon Applied</p>
+                    <p className="text-xs font-black text-white">{appliedCoupon.code}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={handleRemoveCoupon}
+                  className="text-gray-500 hover:text-red-400 transition-colors"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
+            )}
 
             <div className="space-y-3 mb-6">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-medium text-gray-500">SUBTOTAL</span>
                 <span className="text-sm font-bold text-gray-200">TK. {subtotal.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between items-center pt-2">
+              
+              {discount > 0 && (
+                <div className="flex justify-between items-center text-[#55FF82]">
+                  <span className="text-xs font-medium">DISCOUNT</span>
+                  <span className="text-sm font-bold">- TK. {discount.toLocaleString()}</span>
+                </div>
+              )}
+
+              <div className="flex justify-between items-center pt-2 border-t border-[#1A2E23]">
                 <span className="text-sm font-bold text-gray-100">TOTAL</span>
                 <span className="text-lg font-black text-white">TK. {total.toLocaleString()}</span>
               </div>

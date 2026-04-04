@@ -1,21 +1,26 @@
 import { create } from "zustand";
-import { CartItem, Product } from "../types";
+import { CartItem, Product, CouponValidationResult } from "../types";
 
 interface CartStore {
   items: CartItem[];
   isLoading: boolean;
+  appliedCoupon: CouponValidationResult | null;
   addItem: (item: CartItem) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   setItems: (items: CartItem[]) => void;
   setLoading: (loading: boolean) => void;
+  setAppliedCoupon: (coupon: CouponValidationResult | null) => void;
+  getSubtotal: () => number;
+  getDiscount: () => number;
   getTotal: () => number;
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
   isLoading: false,
+  appliedCoupon: null,
   addItem: (item) => {
     const { items } = get();
     const existingItem = items.find((i) => i.productId === item.productId);
@@ -41,11 +46,48 @@ export const useCartStore = create<CartStore>((set, get) => ({
       ),
     });
   },
-  clearCart: () => set({ items: [] }),
+  clearCart: () => set({ items: [], appliedCoupon: null }),
   setItems: (items) => set({ items }),
   setLoading: (loading) => set({ isLoading: loading }),
-  getTotal: () => {
+  setAppliedCoupon: (coupon) => set({ appliedCoupon: coupon }),
+  
+  getSubtotal: () => {
     const { items } = get();
     return items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  },
+
+  getDiscount: () => {
+    const { items, appliedCoupon } = get();
+    if (!appliedCoupon) return 0;
+
+    const subtotal = items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+
+    // If it's a percentage discount
+    if (appliedCoupon.discountType === "PERCENTAGE") {
+      if (appliedCoupon.isGlobal) {
+        return (subtotal * appliedCoupon.discountValue) / 100;
+      } else {
+        // Product specific
+        const item = items.find(i => i.productId === appliedCoupon.productId);
+        if (!item) return 0; // Product not in cart anymore
+        return (item.product.price * item.quantity * appliedCoupon.discountValue) / 100;
+      }
+    } else {
+      // Fixed discount
+      if (appliedCoupon.isGlobal) {
+        return Math.min(appliedCoupon.discountValue, subtotal);
+      } else {
+        // Product specific fixed discount
+        const item = items.find(i => i.productId === appliedCoupon.productId);
+        if (!item) return 0;
+        return Math.min(appliedCoupon.discountValue, item.product.price * item.quantity);
+      }
+    }
+  },
+
+  getTotal: () => {
+    const subtotal = get().getSubtotal();
+    const discount = get().getDiscount();
+    return Math.max(0, subtotal - discount);
   },
 }));

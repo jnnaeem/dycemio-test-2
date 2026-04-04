@@ -1,5 +1,5 @@
 import api from "./api";
-import { AuthResponse } from "../types";
+import { AuthResponse, Order, Coupon, CouponValidationResult } from "../types";
 
 export const authAPI = {
   signup: async (data: {
@@ -74,11 +74,42 @@ export const orderAPI = {
 
   getOrders: async () => {
     const response = await api.get("/orders");
-    return response.data.data;
+    return response.data.data as Order[];
   },
 
   getOne: async (id: string) => {
     const response = await api.get(`/orders/${id}`);
     return response.data.data;
+  },
+};
+
+export const couponAPI = {
+  getAll: async () => {
+    const response = await api.get("/coupons");
+    return response.data.data as Coupon[];
+  },
+  getByCode: async (code: string) => {
+    const response = await api.get(`/coupons/${code}`);
+    return response.data.data as Coupon;
+  },
+  getById: async (id: string) => {
+    const response = await api.get(`/coupons/id/${id}`);
+    return response.data.data as Coupon;
+  },
+  create: async (data: any) => {
+    const response = await api.post("/coupons", data);
+    return response.data.data as Coupon;
+  },
+  update: async (id: string, data: any) => {
+    const response = await api.patch(`/coupons/${id}`, data);
+    return response.data.data as Coupon;
+  },
+  delete: async (id: string) => {
+    const response = await api.delete(`/coupons/${id}`);
+    return response.data.data;
+  },
+  validate: async (code: string, items: any[]) => {
+    const response = await api.post("/coupons/validate", { code, items });
+    return response.data.data as CouponValidationResult;
   },
 };

@@ -11,6 +11,7 @@ import orderRoutes from "./modules/order/order.route";
 import adminProductRoutes from "./modules/admin/admin-product.route";
 import adminOrderRoutes from "./modules/admin/admin-order.route";
 import adminUserRoutes from "./modules/admin/admin-user.route";
+import couponRoutes from "./modules/coupon/coupon.route";
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin/users", adminUserRoutes);
+app.use("/api/coupons", couponRoutes);
 
 // 404 Handler
 app.use((req, res) => {

@@ -13,6 +13,7 @@ import {
   User,
   LogOut,
   ChevronRight,
+  Ticket,
 } from "lucide-react";
 import {
   Sheet,
@@ -50,6 +51,11 @@ const navItems: NavItem[] = [
     title: "Customers",
     href: "/dashboard/customers",
     icon: Users,
+  },
+  {
+    title: "Coupons",
+    href: "/dashboard/coupons",
+    icon: Ticket,
   },
   {
     title: "Profile",

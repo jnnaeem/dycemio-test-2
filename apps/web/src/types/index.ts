@@ -45,8 +45,11 @@ export type Order = {
   status: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "REFUNDED";
   paymentStatus: "PENDING" | "COMPLETED" | "FAILED" | "REFUNDED";
   totalAmount: number;
+  discountAmount: number;
   shippingAddress?: string;
   notes?: string;
+  couponId?: string;
+  coupon?: Coupon;
   items: OrderItem[];
   payment?: Payment;
   createdAt: string;
@@ -81,4 +84,34 @@ export type User = {
 export type AuthResponse = {
   user: User;
   token: string;
+};
+
+export type DiscountType = "PERCENTAGE" | "FIXED";
+
+export type Coupon = {
+  id: string;
+  code: string;
+  discountType: DiscountType;
+  discountValue: number;
+  minOrderAmount?: number;
+  maxDiscount?: number;
+  startDate?: string;
+  endDate?: string;
+  usageLimit?: number;
+  usedCount: number;
+  isActive: boolean;
+  productId?: string;
+  product?: Product;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CouponValidationResult = {
+  couponId: string;
+  code: string;
+  discountAmount: number;
+  discountType: DiscountType;
+  discountValue: number;
+  isGlobal: boolean;
+  productId?: string;
 };
