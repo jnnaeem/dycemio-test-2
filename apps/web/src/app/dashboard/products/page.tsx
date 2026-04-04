@@ -30,7 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LoadingSpinner } from "@/components/admin/LoadingSpinner";
-import { Plus, Trash, Edit, PackageSearch } from "lucide-react";
+import { Plus, Trash, Edit, PackageSearch, RotateCw } from "lucide-react";
 import { SearchBar } from "@/components/admin/SearchBar";
 import { EmptyState } from "@/components/admin/EmptyState";
 import { Pagination } from "@/components/admin/Pagination";
@@ -46,7 +46,6 @@ export default function ProductsPage() {
     isLoading: loading,
     mutate,
   } = useSWR("adminProducts", adminProductAPI.getAll);
-  const [search, setSearch] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
@@ -109,15 +108,27 @@ export default function ProductsPage() {
           </p>
         </div>
 
-        <Button
-          asChild
-          className="bg-primary hover:bg-primary/90 text-white active:scale-95 transition-all"
-        >
-          <Link href="/dashboard/products/new">
-            <Plus className="h-4 w-4" />
-            Add Product
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => mutate()}
+            className="bg-white dark:bg-[#27292D] size-9.5 hover:bg-card active:scale-95 transition-all cursor-pointer shrink-0"
+            title="Refresh"
+          >
+            <RotateCw className="h-4 w-4" />
+          </Button>
+
+          <Button
+            asChild
+            className="bg-primary hover:bg-primary/90 text-white active:scale-95 transition-all"
+          >
+            <Link href="/dashboard/products/new">
+              <Plus className="h-4 w-4" />
+              Add Product
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <Card className="border card-border shadow-lg shadow-[#2E2D740D] rounded-[10px] overflow-hidden bg-card mt-8">
