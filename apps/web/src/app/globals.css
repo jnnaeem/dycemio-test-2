@@ -130,6 +130,7 @@
     @apply border-border outline-ring/50;
   }
   body {
+    font-family: var(--font-inter);
     @apply bg-linear-to-br from-[#0B1C13] to-[#0B1C13];
   }
   h1, h2, h3, h4, h5, h6 {
