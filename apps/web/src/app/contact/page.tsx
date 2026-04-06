@@ -73,10 +73,7 @@ export default function ContactPage() {
           <div>
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-2 mb-4">
-              <Link
-                href="/"
-                className="hover:text-[#C7C0AF] transition-colors text-sm"
-              >
+              <Link href="/" className="text-[#C7C0AF] text-sm">
                 Home
               </Link>
               <ChevronRight className="size-4" />
