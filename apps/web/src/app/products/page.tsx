@@ -13,6 +13,7 @@ import { useCartSheetStore } from "@/store/cartSheetStore";
 import { toast } from "sonner";
 import { LoadingSpinner } from "@/components/admin/LoadingSpinner";
 import { ProductsHero } from "./ProductsHero";
+import { LatestProduct } from "./LatestProduct";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -60,6 +61,7 @@ export default function ProductsPage() {
   return (
     <>
       <ProductsHero />
+      <LatestProduct />
 
       {/* Products Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
