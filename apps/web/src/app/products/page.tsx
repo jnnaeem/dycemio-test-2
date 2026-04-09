@@ -12,6 +12,7 @@ import { getProductImageUrl } from "@/lib/utils";
 import { useCartSheetStore } from "@/store/cartSheetStore";
 import { toast } from "sonner";
 import { LoadingSpinner } from "@/components/admin/LoadingSpinner";
+import { ProductsHero } from "./ProductsHero";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -57,39 +58,8 @@ export default function ProductsPage() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
-              🎲 Diceymio
-            </Link>
-            <div className="flex gap-4">
-              <Link
-                href="/cart"
-                className="text-gray-600 hover:text-gray-900 font-medium"
-              >
-                Cart
-              </Link>
-              <Link
-                href="/orders"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                Orders
-              </Link>
-              {user?.role === "ADMIN" && (
-                <Link
-                  href="/admin"
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  Admin
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
+    <>
+      <ProductsHero />
 
       {/* Products Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -136,6 +106,6 @@ export default function ProductsPage() {
           ))}
         </div>
       </section>
-    </div>
+    </>
   );
 }
