@@ -14,6 +14,8 @@ import { getProductImageUrl } from "@/lib/utils";
 import { useCartSheetStore } from "@/store/cartSheetStore";
 import { toast } from "sonner";
 import { LoadingSpinner } from "@/components/admin/LoadingSpinner";
+import Link from "next/link";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const cardThemes = [
   {
@@ -43,68 +45,57 @@ function ProductCard({ product, themeIndex, onAdd }: { product: Product; themeIn
   const rating = 5.0;
 
   return (
-    <article className={`relative overflow-hidden rounded-4xl border ${theme.wrapper} shadow-[0_20px_80px_rgba(0,0,0,0.15)] transition-transform hover:-translate-y-1`}>
-      <div className={`relative flex h-full flex-col ${theme.card} border border-white/10 p-5 sm:p-6 rounded-[28px]`}>
-        <div className="flex items-center justify-between gap-3">
-          <span className={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${theme.badge}`}>
-            {discount}% OFF
-          </span>
-          <div className="inline-flex items-center gap-2 rounded-full bg-black/20 px-3 py-1 text-sm text-[#F5F0D5]">
-            <FaStar className="h-3.5 w-3.5 text-[#F7D461]" />
-            <span>{rating.toFixed(2)}</span>
-          </div>
-        </div>
-
-        <div className="relative mt-5 flex-1 overflow-hidden rounded-[28px] border border-white/10 bg-[#090D08] p-4">
-          <div className="relative mx-auto h-56 w-full max-w-55">
-            <img
-              src={imageUrl || "/images/goyendagiri.png"}
-              alt={product.name}
-              className="absolute inset-0 h-full w-full object-contain"
-            />
-          </div>
-        </div>
-
-        <div className="mt-6 flex flex-col gap-4">
-          <div className="space-y-2">
-            <h3 className="text-xl font-semibold text-white">{product.name}</h3>
-            <p className="text-sm text-[#C7D7BC] line-clamp-2">
-              {product.description || "A premium board game experience for families and friends."}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 text-[11px] text-[#D9E8C9]">
-            <div className="flex flex-col items-center gap-2">
-              <FaUsers className="h-4 w-4 text-[#F7D461]" />
-              <span>3-6 Players</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <LuClock4 className="h-4 w-4 text-[#F7D461]" />
-              <span>30-45 min</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <RiDashboardFill className="h-4 w-4 text-[#F7D461]" />
-              <span>Board game</span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <div className="text-sm uppercase tracking-[0.2em] text-[#B8C99C]">Price</div>
-              <div className="text-2xl font-bold text-white">TK. {product.price}</div>
-            </div>
-            <button
-              type="button"
-              onClick={() => onAdd(product)}
-              disabled={product.stock === 0}
-              className="inline-flex items-center justify-center rounded-full bg-[#F7D461] px-6 py-3 text-sm font-semibold uppercase text-[#12100A] shadow-[0_15px_30px_rgba(247,212,97,0.25)] transition hover:bg-[#E6CB4D] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-            </button>
-          </div>
+    <div>
+      <div className="mb-5">
+        <div className="relative mx-auto h-56 w-full">
+          <img
+            src={imageUrl || "/images/goyendagiri.png"}
+            alt={product.name}
+            className="absolute inset-0 h-full w-full object-contain"
+          />
         </div>
       </div>
-    </article>
+      <div className="flex items-center justify-between gap-3">
+        <span className={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${theme.badge}`}>
+          {discount}% OFF
+        </span>
+        <div className="inline-flex items-center gap-2 rounded-full bg-black/20 px-3 py-1 text-sm text-[#F5F0D5]">
+          <FaStar className="h-3.5 w-3.5 text-[#F7D461]" />
+          <span>{rating.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div className="mt-6 flex flex-col gap-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <FaUsers className="size-4 text-[#FFFFFF59]" />
+            <p className="text-sm font-medium text-[#FEF5DECC]">3-6 Players</p>
+          </div>
+          <span className="h-5 w-px bg-[#FFFFFF24]" />
+          <div className="flex items-center gap-2">
+            <LuClock4 className="size-4 text-[#FFFFFF59]" />
+            <p className="text-sm font-medium text-[#FEF5DECC]">30-45 min</p>
+          </div>
+        </div>
+        <Link href={`/products/`} className="text-xl md:text-2xl font-medium text-[#FEF5DE] hover:text-[#EAEA4C] font-phudu">{product.name}</Link>
+
+
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="space-x-3">
+            <span className="text-lg md:text-xl uppercase text-[#EAEA4C] font-semibold font-phudu">TK. {product.price}</span>
+            <span className="text-lg md:text-xl uppercase text-[#FFFFFF73] font-phudu line-through">TK. 900</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => onAdd(product)}
+            disabled={product.stock === 0}
+            className="bg-[#EAEA4C] hover:bg-[#D4D84F] text-[#12100A] font-semibold font-phudu text-xs sm:text-sm uppercase py-2.5 px-4 rounded-lg transition-all active:scale-95 hover:scale-105 border-2 border-b-4 border-black cursor-pointer"
+          >
+            {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -151,21 +142,27 @@ export function AllProducts() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <section className="relative overflow-hidden py-16 lg:py-24">
+    <section className="relative overflow-hidden py-16 lg:py-24 px-6">
       <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/images/common-section-bg.png')" }} />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6">
-        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm uppercase tracking-[0.25em] text-[#C7D7BC]">Diceymio Games</p>
-            <h1 className="text-4xl font-bold text-white sm:text-5xl">Discover your next favorite board game</h1>
-          </div>
-          <button className="flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm uppercase tracking-[0.3em] text-white transition hover:bg-white/10">
-            Best Selling
-          </button>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-12 flex gap-4 items-center justify-between flex-wrap">
+          <h1 className="text-2xl md:text-3xl font-semibold text-[#FEF5DE]">Diceymio Games</h1>
+          <Select defaultValue="all">
+            <SelectTrigger className="w-[160px] border-2 border-b-4 border-[#FEF5DE]">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="all">All Games</SelectItem>
+                <SelectItem value="best-selling">Best Selling</SelectItem>
+                <SelectItem value="newest">Newest</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16">
           {products.map((product, index) => (
             <ProductCard key={product.id} product={product} themeIndex={index} onAdd={handleAddToCart} />
           ))}

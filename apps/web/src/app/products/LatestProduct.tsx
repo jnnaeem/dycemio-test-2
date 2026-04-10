@@ -6,7 +6,7 @@ import { RiDashboardFill } from "react-icons/ri";
 export function LatestProduct() {
   return (
     <section className="px-6 py-16 bg-[#12100A]">
-      <div className="max-w-7xl mx-auto relative bg-linear-to-b from-[#143021] to-[#0B1C13] rounded-[20px] border border-[#FFFFFF1A] px-8 sm:px-12 lg:px-16 py-8 sm:py-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto relative bg-linear-to-b from-[#143021] to-[#0B1C13] rounded-[20px] border border-[#FFFFFF1A] px-3.5 sm:px-12 lg:px-16 py-4 sm:py-12 overflow-hidden">
         {/* Top Badges Row */}
         <div className="md:block hidden">
           <TopBadge />
