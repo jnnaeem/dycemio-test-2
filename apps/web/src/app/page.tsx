@@ -1,11 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
-import { useCartSheetStore } from "@/store/cartSheetStore";
 import { useEffect } from "react";
-import { ShoppingCart } from "lucide-react";
 import { cartAPI } from "@/lib/services";
 import { toast } from "sonner";
 import useSWR from "swr";
@@ -13,8 +10,7 @@ import { HeroSlider } from "@/components/home/HeroSlider";
 
 export default function Home() {
   const { user, restoreFromStorage } = useAuthStore();
-  const { items, setItems } = useCartStore();
-  const { onOpen } = useCartSheetStore();
+  const { setItems } = useCartStore();
 
   useEffect(() => {
     restoreFromStorage();
@@ -39,79 +35,6 @@ export default function Home() {
 
   return (
     <div className="min-h-svh">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 glass border-b border-gray-200/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-3xl filter transition-transform group-hover:rotate-12 duration-300">
-                🎲
-              </span>
-              <span className="text-2xl font-black bg-clip-text text-transparent bg-linear-to-r from-blue-600 to-indigo-600">
-                Diceymio
-              </span>
-            </Link>
-
-            <div className="hidden md:flex items-center gap-8">
-              {user ? (
-                <>
-                  <Link
-                    href="/products"
-                    className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
-                  >
-                    Store
-                  </Link>
-                  <Link
-                    href="/orders"
-                    className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
-                  >
-                    Orders
-                  </Link>
-                  <button
-                    onClick={onOpen}
-                    className="relative p-2 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer group"
-                    title="Cart"
-                  >
-                    <ShoppingCart className="size-5" />
-                    {items?.length > 0 && (
-                      <span className="absolute top-0 right-0 size-4 bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center rounded-full">
-                        {items.length}
-                      </span>
-                    )}
-                  </button>
-                  {user.role === "ADMIN" && (
-                    <Link
-                      href="/dashboard"
-                      className="px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-full hover:bg-blue-100 transition-colors"
-                    >
-                      Dashboard
-                    </Link>
-                  )}
-                  <div className="w-10 h-10 rounded-full bg-linear-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-200">
-                    {user.firstName?.[0] || user.email[0].toUpperCase()}
-                  </div>
-                </>
-              ) : (
-                <div className="flex items-center gap-4">
-                  <Link
-                    href="/auth/login"
-                    className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/auth/signup"
-                    className="px-6 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-200 transition-all active:scale-95"
-                  >
-                    Get Started
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main>
         <HeroSlider />
 
